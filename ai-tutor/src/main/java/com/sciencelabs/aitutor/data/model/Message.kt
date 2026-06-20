@@ -12,7 +12,7 @@ sealed class MessageRole {
 @Serializable
 data class Message(
     val id: String,
-    val role: String,
+    val role: String, // "user", "assistant", or "system"
     val text: String,
     val createdAt: Long = System.currentTimeMillis()
 )
