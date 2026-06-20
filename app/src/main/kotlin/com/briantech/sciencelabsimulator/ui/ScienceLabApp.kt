@@ -14,11 +14,13 @@ import com.briantech.sciencelabsimulator.ui.screens.ChemistryDetailScreen
 import com.briantech.sciencelabsimulator.ui.screens.PhysicsScreen
 import com.briantech.sciencelabsimulator.ui.screens.PhysicsDetailScreen
 import com.briantech.sciencelabsimulator.ui.screens.BiologyScreen
+import com.briantech.sciencelabsimulator.ui.screens.BiologyDetailScreen
 import com.briantech.sciencelabsimulator.ui.screens.AiTutorScreen
 import com.briantech.sciencelabsimulator.ui.screens.SavedExperimentsScreen
 import com.briantech.sciencelabsimulator.ui.screens.HomeScreen
 import com.briantech.sciencelabsimulator.ui.viewmodel.ChemistryLabViewModel
 import com.briantech.sciencelabsimulator.ui.viewmodel.PhysicsLabViewModel
+import com.briantech.sciencelabsimulator.ui.viewmodel.BiologyLabViewModel
 
 @Composable
 fun ScienceLabApp() {
@@ -29,6 +31,7 @@ fun ScienceLabApp() {
         val navController = rememberNavController()
         val chemistryLabViewModel: ChemistryLabViewModel = viewModel()
         val physicsLabViewModel: PhysicsLabViewModel = viewModel()
+        val biologyLabViewModel: BiologyLabViewModel = viewModel()
 
         NavHost(
             navController = navController,
@@ -51,6 +54,9 @@ fun ScienceLabApp() {
             }
             composable("biology") {
                 BiologyScreen(navController = navController)
+            }
+            composable("biology_detail") {
+                BiologyDetailScreen(navController = navController, viewModel = biologyLabViewModel)
             }
             composable("ai_tutor") {
                 AiTutorScreen(navController = navController)
