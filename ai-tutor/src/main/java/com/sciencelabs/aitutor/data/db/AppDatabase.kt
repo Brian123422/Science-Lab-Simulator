@@ -7,18 +7,20 @@ import androidx.room.RoomDatabase
 
 /**
  * The main Room Database for the AI Tutor.
- * Contains tables for Experiments and Messages.
+ * Contains tables for Experiments, Messages and Notes.
  */
 @Database(
     entities = [
         ExperimentEntity::class,
-        MessageEntity::class
+        MessageEntity::class,
+        NoteEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun experimentDao(): ExperimentDao
+    abstract fun notesDao(): NotesDao
 
     companion object {
         @Volatile
