@@ -1,24 +1,21 @@
 package com.sciencelabs.aitutor.ui
 
-import android.app.Activity
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sciencelabs.aitutor.data.db.AppDatabase
 import com.sciencelabs.aitutor.data.repository.ExperimentRepository
+import com.sciencelabs.aitutor.data.repository.InventoryRepository
 
 @Composable
 fun TutorNavHost(startDestination: String = "history") {
     val navController = rememberNavController()
-    val context = LocalContext.current
+    val context = androidx.compose.ui.platform.LocalContext.current
     val database = remember { AppDatabase.getInstance(context) }
     val repository = remember { ExperimentRepository(database) }
+    val inventoryRepo = remember { InventoryRepository() }
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable("history") {
@@ -31,6 +28,13 @@ fun TutorNavHost(startDestination: String = "history") {
         composable("chat/{experimentId}") { backStackEntry ->
             val experimentId = backStackEntry.arguments?.getString("experimentId") ?: return@composable
             ExperimentChatScreen(experimentId = experimentId, repository = repository, onBack = { navController.popBackStack() })
+        }
+
+        composable("inventory") {
+            val viewModel = remember { InventoryViewModel(inventoryRepo) }
+            InventoryScreen(viewModel = viewModel, onItemSelected = {
+                // Simple behavior: show a snackbar or extend navigation as needed
+            })
         }
     }
 }
