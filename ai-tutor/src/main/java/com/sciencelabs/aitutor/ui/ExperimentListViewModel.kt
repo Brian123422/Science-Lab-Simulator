@@ -6,7 +6,6 @@ import com.sciencelabs.aitutor.data.db.ExperimentEntity
 import com.sciencelabs.aitutor.data.repository.ExperimentRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -24,12 +23,11 @@ class ExperimentListViewModel(
         }
     }
 
-    fun duplicateExperiment(experimentId: String): String {
-        var newId = ""
+    fun duplicateExperiment(experimentId: String, onComplete: (String) -> Unit = {}) {
         viewModelScope.launch {
-            newId = repository.duplicateExperiment(experimentId)
+            val newId = repository.duplicateExperiment(experimentId)
+            onComplete(newId)
         }
-        return newId
     }
 
     fun deleteExperiment(experimentId: String) {
