@@ -2,20 +2,23 @@ package com.sciencelabs.aitutor.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sciencelabs.aitutor.data.db.AppDatabase
 import com.sciencelabs.aitutor.data.repository.ExperimentRepository
+import com.sciencelabs.aitutor.data.repository.FactsRepository
 import com.sciencelabs.aitutor.data.repository.InventoryRepository
 
 @Composable
 fun TutorNavHost(startDestination: String = "history") {
     val navController = rememberNavController()
-    val context = androidx.compose.ui.platform.LocalContext.current
+    val context = LocalContext.current
     val database = remember { AppDatabase.getInstance(context) }
     val repository = remember { ExperimentRepository(database) }
     val inventoryRepo = remember { InventoryRepository() }
+    val factsRepo = remember { FactsRepository() }
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable("history") {
@@ -35,6 +38,11 @@ fun TutorNavHost(startDestination: String = "history") {
             InventoryScreen(viewModel = viewModel, onItemSelected = {
                 // Simple behavior: show a snackbar or extend navigation as needed
             })
+        }
+
+        composable("facts") {
+            val viewModel = remember { FactsViewModel(factsRepo) }
+            FactsScreen(viewModel = viewModel)
         }
     }
 }
