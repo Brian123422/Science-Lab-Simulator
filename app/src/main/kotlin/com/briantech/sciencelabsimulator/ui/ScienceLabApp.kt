@@ -12,11 +12,13 @@ import androidx.navigation.compose.rememberNavController
 import com.briantech.sciencelabsimulator.ui.screens.ChemistryScreen
 import com.briantech.sciencelabsimulator.ui.screens.ChemistryDetailScreen
 import com.briantech.sciencelabsimulator.ui.screens.PhysicsScreen
+import com.briantech.sciencelabsimulator.ui.screens.PhysicsDetailScreen
 import com.briantech.sciencelabsimulator.ui.screens.BiologyScreen
 import com.briantech.sciencelabsimulator.ui.screens.AiTutorScreen
 import com.briantech.sciencelabsimulator.ui.screens.SavedExperimentsScreen
 import com.briantech.sciencelabsimulator.ui.screens.HomeScreen
 import com.briantech.sciencelabsimulator.ui.viewmodel.ChemistryLabViewModel
+import com.briantech.sciencelabsimulator.ui.viewmodel.PhysicsLabViewModel
 
 @Composable
 fun ScienceLabApp() {
@@ -26,6 +28,7 @@ fun ScienceLabApp() {
     ) {
         val navController = rememberNavController()
         val chemistryLabViewModel: ChemistryLabViewModel = viewModel()
+        val physicsLabViewModel: PhysicsLabViewModel = viewModel()
 
         NavHost(
             navController = navController,
@@ -42,6 +45,9 @@ fun ScienceLabApp() {
             }
             composable("physics") {
                 PhysicsScreen(navController = navController)
+            }
+            composable("physics_detail") {
+                PhysicsDetailScreen(navController = navController, viewModel = physicsLabViewModel)
             }
             composable("biology") {
                 BiologyScreen(navController = navController)
